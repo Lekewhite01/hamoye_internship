@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import joblib
 import seaborn as sns
 import pickle
 import matplotlib.pyplot as plt
@@ -89,7 +90,7 @@ def build_model(voting="hard"):
         OrdinalEncoder(),
         VotingClassifier(estimators=estimator, voting=voting)
     )
-
+    
     # Return the built model
     return model
 
@@ -115,6 +116,17 @@ def main():
     # Fit the model with the oversampled data
     model.fit(X_train_over, y_train_over)
     
+    # Specify the file path where you want to save the model
+    model_path = f'model_{pd.Timestamp.now().isoformat()}.pkl'
+
+    # Save the model to the file using pickle
+    with open(model_path, 'wb') as file:
+        pickle.dump(model, file)
+
+    # joblib.dump(model, model_path)
+    
+    print(f'Model saved to {model_path}')
+    
     # Generate the classification report
     report = classification_report(y_test, model.predict(X_test))
 
@@ -139,11 +151,12 @@ def main():
     feat_imp = pd.Series(feature_importances_model, index=features).sort_values(ascending=False)
     
     # Create a horizontal bar plot for feature importance
-    plt.figure(figsize=(10,8))
+    plt.figure(figsize=(8,6))
     sns.barplot(x=feat_imp.values, y=feat_imp.index, orient='h',color=sns.color_palette()[0])
     plt.xlabel("Gini Importance")
     plt.ylabel("Features")
     plt.title("Feature Importance")
+    plt.tight_layout()
 
     # Specify the file path and format for saving the plot
     png_path = "feature_importance.png"  # You can choose the file format (e.g., .png, .jpg, .svg)
@@ -153,17 +166,6 @@ def main():
 
     # Print a confirmation message
     print(f"Feature importance has been saved to {png_path}")
-
-    print("Model Training Complete!!!")
-    
-    # Specify the file path where you want to save the model
-    model_path = 'model.pkl'
-
-    # Save the model to the file using pickle
-    with open(model_path, 'wb') as file:
-        pickle.dump(model, file)
-
-    print(f'Model saved to {model_path}')
     
 if __name__ == "__main__":
 
