@@ -10,7 +10,7 @@ from sklearn.svm import SVC
 from sklearn.linear_model import LogisticRegression 
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score 
-from sklearn.preprocessing import OneHotEncoder 
+from sklearn.preprocessing import OneHotEncoder, RobustScaler 
 from sklearn.tree import DecisionTreeClassifier, plot_tree
 from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier, VotingClassifier 
 from category_encoders import OrdinalEncoder
@@ -88,6 +88,7 @@ def build_model(voting="hard"):
     # Create a Voting Classifier with the specified voting method
     model = make_pipeline(
         OrdinalEncoder(),
+        RobustScaler(),
         VotingClassifier(estimators=estimator, voting=voting)
     )
     
@@ -146,7 +147,7 @@ def main():
             feature_importances_model = model.feature_importances_
         
     # Get feature names from training data
-    features = model.feature_names_in_
+    features = X_train.columns
 
     # Create a series with feature names and importances
     feat_imp = pd.Series(feature_importances_model, index=features).sort_values(ascending=False)

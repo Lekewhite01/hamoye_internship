@@ -26,26 +26,11 @@ def data_wrangler(filename, threshold=30000):
     float_columns = list(model_df.select_dtypes('float').columns)
     model_df[float_columns] = model_df[float_columns].fillna(0)
 
-    # Drop rows with null values from `model_df`
-    model_df.dropna(inplace=True)
-
     # Convert the 'Year' column to a string
     model_df["Year"] = model_df["Year"].astype(str)
-
-    # Filter rows based on import and export quantity percentiles
-    min_threshold_import, max_threshold_import = df['Importer reported quantity'].quantile([0.05, 0.99])
-    min_threshold_export, max_threshold_export = df['Exporter reported quantity'].quantile([0.05, 0.99])
-
-    model_df = df[
-        (df['Importer reported quantity'] < max_threshold_import) &
-        (df['Importer reported quantity'] > min_threshold_import) &
-        (df['Exporter reported quantity'] < max_threshold_export) &
-        (df['Exporter reported quantity'] > min_threshold_export)
-    ]
-
-    # Drop specific columns ('Origin' and 'Unit')
-    drop_cols = ['Origin', 'Unit']
-    model_df.drop(drop_cols, axis=1, inplace=True)
+    
+    # Filter rows where 'App' is not equal to 'N'
+    model_df = model_df[model_df['App.'] != 'N']
 
     # Drop any remaining rows with null values from `model_df`
     model_df.dropna(inplace=True)
