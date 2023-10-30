@@ -139,7 +139,7 @@ def main():
         if input_file:
             input_df = pd.read_csv(input_file)
             with st.spinner('Running inference...'):
-                time.sleep(5)
+                time.sleep(30)
             # Make predictions for the batch and append them to the DataFrame
             predictions = loaded_model.predict(input_df)
             st.success('Inference Done!')
