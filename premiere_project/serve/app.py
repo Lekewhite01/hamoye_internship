@@ -72,10 +72,10 @@ st.warning(f"You have selected: {prediction_type}")
 
 # Specify model path
 # This is for deployment
-model_path = Path('premiere_project/serve/model/model_2023-11-01T18:42:11.772818.pkl')
+model_path = Path('premiere_project/serve/model/model_2023-11-01T18:58:43.960271.pkl')
 
 # This is for local runs
-# model_path = 'model/model_2023-11-01T18:42:11.772818.pkl'
+# model_path = 'model/model_2023-11-01T18:58:43.960271.pkl'
 
 # Load the model from the file
 with open(model_path, 'rb') as file:
