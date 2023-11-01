@@ -71,7 +71,7 @@ prediction_type = st.radio("Select Prediction Type", options=["Single Prediction
 st.warning(f"You have selected: {prediction_type}")
 
 # Specify model path
-model_path = Path('model/model_2023-10-30T14:33:01.425548.pkl')
+model_path = Path('premiere_project/serve/model/model_2023-10-30T14:33:01.425548.pkl')
 
 # Load the model from the file
 with open(model_path, 'rb') as file:
