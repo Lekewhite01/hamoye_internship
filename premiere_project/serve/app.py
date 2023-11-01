@@ -141,7 +141,8 @@ def main():
             # Make predictions using the loaded model and display the result
             prediction = loaded_model.predict(input_df)
             st.success('Inference Done!')
-            st.write(f"This species belongs in class: {prediction}")
+            st.header("Predicted Class")
+            st.write(prediction)
 
     if prediction_type == 'Batch Prediction':
         # If the user selects 'Batch Prediction', allow them to upload a CSV file
