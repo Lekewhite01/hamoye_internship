@@ -1,5 +1,5 @@
 category_encoders==2.6.1
-imbalanced_learn==0.11.0
+streamlit
 imblearn==0.0
 numpy==1.22.4
 pandas==2.1.2
